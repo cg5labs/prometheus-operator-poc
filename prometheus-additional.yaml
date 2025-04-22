@@ -1,0 +1,10 @@
+- job_name: "federate"
+  scrape_interval: 15s
+  honor_labels: true
+  metrics_path: '/federate'
+  params:
+    'match[]':
+      - '{job="prometheus"}'
+      - '{__name__=~"job:.*"}'
+  static_configs:
+    - targets: [ "po-kube-prometheus-stack-prometheus.infra.svc.cluster.local:9090", "prometheus-operated.infra.svc.cluster.local:9090" ]

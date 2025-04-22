@@ -1,0 +1,25 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus-eks2
+  namespace: infra
+  labels:
+    prometheus: prometheus-eks2
+spec:
+  replicas: 1
+  podMetadata:
+    labels:
+      app: prometheus-eks2
+  externalLabels:
+    cluster: eks-2
+  serviceAccountName: prometheus
+  serviceMonitorSelector: {}
+  alerting:
+    alertmanagers:
+    - namespace: default
+      name: alertmanager
+      port: web
+  additionalScrapeConfigs:
+    name: additional-scrape-configs2
+    key: prometheus-additional2.yaml
